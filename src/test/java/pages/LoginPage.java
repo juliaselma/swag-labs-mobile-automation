@@ -4,6 +4,10 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class LoginPage extends BasePage{
     public LoginPage(AppiumDriver driver) {
@@ -14,7 +18,9 @@ public class LoginPage extends BasePage{
     private final By passwordField = AppiumBy.accessibilityId("test-Password");
     private final By loginButton   = AppiumBy.accessibilityId("test-LOGIN");
 
-    public void enterUsername(String username) {
+    public void enterUsername(String username){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(usernameField));
         WebElement element = driver.findElement(usernameField);
         element.sendKeys(username);
     }

@@ -1,36 +1,50 @@
 package core;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
-
-
-import java.net.MalformedURLException;
+import io.appium.java_client.android.AndroidDriver;
 import java.net.URL;
 import java.time.Duration;
+import java.net.MalformedURLException;
+import utils.ConfigurationManager;
 
 public class DriverSetup {
-    public static ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
+
+    public static ThreadLocal<AndroidDriver> driver = new ThreadLocal<>();
+
     public static void initializeDriver() {
         try {
-            UiAutomator2Options options = new UiAutomator2Options()
-                    .setPlatformName("Android")
-                    .setDeviceName("emulator-5554")
-                    .setAppPackage("com.swaglabsmobileapp")
-                    .setAppActivity("com.swaglabsmobileapp.MainActivity")
-                    .setAutomationName("UiAutomator2")
-                    .setApp("C:/Users/Usuario/Documents/codigo/swag-labs-mobile-automation-betsson/app/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk")
-                    .setNewCommandTimeout(Duration.ofSeconds(180))
-                    .setNoReset(true);
+            String platformName = ConfigurationManager.getProperty("platformName");
+            String deviceName = ConfigurationManager.getProperty("deviceName");
+            String appPackage = ConfigurationManager.getProperty("appPackage");
+            String appActivity = ConfigurationManager.getProperty("appActivity");
+            String automationName = ConfigurationManager.getProperty("automationName");
+            String appPath = ConfigurationManager.getProperty("appPath");
+            int timeout = ConfigurationManager.getIntProperty("newCommandTimeoutSeconds");
+            String appiumUrl = ConfigurationManager.getProperty("appiumServerURL");
 
-            URL appiumServerURL = new URL("http://127.0.0.1:4723");
-            driver.set(new io.appium.java_client.android.AndroidDriver(appiumServerURL, options));
+            UiAutomator2Options options = new UiAutomator2Options()
+                    .setPlatformName(platformName)
+                    .setDeviceName(deviceName)
+                    .setAppPackage(appPackage)
+                    .setAppActivity(appActivity)
+                    .setAutomationName(automationName)
+                    .setApp(appPath)
+                    .setNewCommandTimeout(Duration.ofSeconds(timeout));
+
+            URL appiumServerURL = new URL(appiumUrl);
+            driver.set(new AndroidDriver(appiumServerURL, options));
 
             System.out.println("Appium Driver initialized successfully.");
         } catch (MalformedURLException e) {
+            System.err.println("Error setting up driver: Malformed URL.");
             e.printStackTrace();
-            System.out.println("Error setting up driver: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Error setting up driver: " + e.getMessage());
+            e.printStackTrace();
         }
     }
-    public static AppiumDriver getDriver() { return driver.get(); }
 
+    public static AndroidDriver getDriver() {
+        return driver.get();
+    }
 }
