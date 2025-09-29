@@ -1,0 +1,32 @@
+package pages;
+
+import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.WebElement;
+import io.appium.java_client.AppiumBy;
+import org.openqa.selenium.By;
+
+public class LoginPage extends BasePage{
+    public LoginPage(AppiumDriver driver) {
+        super(driver);
+    }
+
+    private final By usernameField = AppiumBy.accessibilityId("test-Username");
+    private final By passwordField = AppiumBy.accessibilityId("test-Password");
+    private final By loginButton   = AppiumBy.accessibilityId("test-LOGIN");
+
+    public void enterUsername(String username) {
+        WebElement element = driver.findElement(usernameField);
+        element.sendKeys(username);
+    }
+
+    public void enterPassword(String password) {
+        WebElement element = driver.findElement(passwordField);
+        element.sendKeys(password);
+    }
+
+    public ProductScreen clickLoginButton() {
+        driver.findElement(loginButton).click();
+        return new ProductScreen(driver);
+    }
+
+}
