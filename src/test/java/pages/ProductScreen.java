@@ -4,7 +4,7 @@ import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
-public class ProductScreen extends BasePage{
+public class ProductScreen extends BaseScreen {
     public ProductScreen(AppiumDriver driver) {
         super(driver);
     }

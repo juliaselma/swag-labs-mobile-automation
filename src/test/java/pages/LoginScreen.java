@@ -9,14 +9,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class LoginPage extends BasePage{
-    public LoginPage(AppiumDriver driver) {
+public class LoginScreen extends BaseScreen {
+    public LoginScreen(AppiumDriver driver) {
         super(driver);
     }
 
     private final By usernameField = AppiumBy.accessibilityId("test-Username");
     private final By passwordField = AppiumBy.accessibilityId("test-Password");
     private final By loginButton   = AppiumBy.accessibilityId("test-LOGIN");
+    private final By errorMessageTextLocator = AppiumBy.xpath("//*[@content-desc='test-Error message']//android.widget.TextView");
+
 
     public void enterUsername(String username){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
@@ -34,5 +36,11 @@ public class LoginPage extends BasePage{
         driver.findElement(loginButton).click();
         return new ProductScreen(driver);
     }
-
+    public String getErrorMessage() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement errorMessageElement = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(errorMessageTextLocator)
+        );
+        return errorMessageElement.getText().trim();
+    }
 }
