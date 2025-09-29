@@ -1,17 +1,15 @@
 package core;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
-import pages.LoginPage;
+
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
 public class DriverSetup {
-    public static AppiumDriver driver;
-    public static LoginPage LoginPage;
+    public static ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
     public static void initializeDriver() {
         try {
             UiAutomator2Options options = new UiAutomator2Options()
@@ -25,8 +23,7 @@ public class DriverSetup {
                     .setNoReset(true);
 
             URL appiumServerURL = new URL("http://127.0.0.1:4723");
-            driver = new AndroidDriver(appiumServerURL, options);
-            setUpStartApp();
+            driver.set(new io.appium.java_client.android.AndroidDriver(appiumServerURL, options));
 
             System.out.println("Appium Driver initialized successfully.");
         } catch (MalformedURLException e) {
@@ -34,18 +31,8 @@ public class DriverSetup {
             System.out.println("Error setting up driver: " + e.getMessage());
         }
     }
-
-    public static void setUpStartApp() {
-        LoginPage = new LoginPage(getDriver());
-    }
-
-    public static AppiumDriver getDriver() {
-        return driver;
-    }
+    public static AppiumDriver getDriver() { return driver.get(); }
     public static void quitDriver() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
-        }
+        if (driver.get() != null) { driver.get().quit(); driver.remove(); }
     }
 }
