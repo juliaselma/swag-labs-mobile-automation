@@ -6,11 +6,15 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = "steps",
-        tags = "@cart",
+        //tags = "@",
         plugin = {"pretty", "html:target/cucumber-reports.html"},
         monochrome = true
 )
 public class TestRunner extends AbstractTestNGCucumberTests {
     // This class runs all features specified in the 'features' path
     // TestNG will execute this class.
+    public TestRunner() {
+        // No-argument constructor required by some configurations
+        // when using Dependency Injection with TestNG runner.
+    }
 }

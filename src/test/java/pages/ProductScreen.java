@@ -12,6 +12,7 @@ public class ProductScreen extends BaseScreen{
     public ProductScreen(AppiumDriver driver) {
         super(driver);
     }
+
     private final By productsTitle = AppiumBy.xpath("//android.widget.TextView[@text='PRODUCTS']");
     private By getProductButtonTextLocator(String productName, String expectedText) {
         return AppiumBy.xpath(String.format(
