@@ -2,37 +2,26 @@ package pages;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.remote.RemoteWebElement;
+import org.testng.Assert;
 
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BaseScreen {
-    protected io.appium.java_client.AppiumDriver driver;
+   protected AppiumDriver driver;
     public BaseScreen(AppiumDriver driver) {
         this.driver = driver;
     }
-
-
-    /**
-     * Waits for an element to be visible and returns it.
-     * @param locator The By locator of the element.
-     * @param timeoutInSeconds The maximum time to wait.
-     * @return The visible WebElement.
-     */
     public WebElement waitForElementVisibility(By locator, int timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
-
-    /**
-     * Checks if an element is visible within a specified timeout.
-     * Used mainly for soft assertions (e.g., checking if an error message appears).
-     * @param locator The By locator of the element.
-     * @param timeoutInSeconds The maximum time to wait.
-     * @return True if the element is visible, false otherwise.
-     */
     public boolean isElementVisible(By locator, int timeoutInSeconds) {
         try {
             waitForElementVisibility(locator, timeoutInSeconds);
@@ -41,16 +30,42 @@ public class BaseScreen {
             return false;
         }
     }
-
-    /**
-     * Waits for an element to be clickable.
-     * @param locator The By locator of the element.
-     * @param timeoutInSeconds The maximum time to wait.
-     * @return The clickable WebElement.
-     */
     public WebElement waitForElementClickable(By locator, int timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
-        // Waits for element to be visible AND enabled
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+    public void scrollIntoViewAndClick(By locator, By scrollContainerLocator, int maxScrolls) {
+        WebElement scrollElement;
+        try {
+            scrollElement = new WebDriverWait(driver, Duration.ofSeconds(10)).until(
+                    ExpectedConditions.presenceOfElementLocated(scrollContainerLocator)
+            );
+        } catch (TimeoutException e) {
+            Assert.fail("Cart scroll container not found within 10 seconds: " + scrollContainerLocator.toString(), e);
+            return;
+        }
+
+        String scrollElementId = ((RemoteWebElement) scrollElement).getId();
+
+        Map<String, Object> scrollArgs = new HashMap<>();
+        scrollArgs.put("elementId", scrollElementId);
+        scrollArgs.put("direction", "down");
+        scrollArgs.put("percent", 0.5);
+        scrollArgs.put("speed", 500);
+
+        for (int i = 0; i < maxScrolls; i++) {
+            try {
+                WebElement targetElement = new WebDriverWait(driver, Duration.ofSeconds(1)).until(
+                        ExpectedConditions.elementToBeClickable(locator)
+                );
+                targetElement.click();
+                return; // Success
+            } catch (Exception e) {
+                if (i < maxScrolls - 1) {
+                    driver.executeScript("mobile: scrollGesture", scrollArgs);
+                }
+            }
+        }
+    Assert.fail("Could not find and click CHECKOUT button after " + maxScrolls + " scrolls: " + locator.toString());
     }
 }

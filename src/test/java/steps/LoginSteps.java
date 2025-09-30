@@ -1,6 +1,7 @@
 package steps;
 
 import core.DriverSetup;
+import io.appium.java_client.AppiumDriver;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import io.cucumber.java.en.Then;
@@ -12,11 +13,17 @@ import pages.ProductScreen;
 public class LoginSteps {
     private LoginScreen loginScreen;
     public static ProductScreen productScreen;
+    public LoginSteps(AppiumDriver driver) {
+        this.loginScreen = new LoginScreen(driver);
+    }
+    public LoginSteps() {
+        AppiumDriver driver = DriverSetup.getDriver();
+        this.loginScreen = new LoginScreen(driver);
+    }
     @Given("the application is running on a mobile device")
     public void the_application_is_running_on_a_mobile_device() {
         loginScreen = new LoginScreen(DriverSetup.getDriver());
     }
-
     @When("I enter {string} in the username field")
     public void i_enter_username_in_the_username_field(String username){
         loginScreen.enterUsername(username);
@@ -37,12 +44,20 @@ public class LoginSteps {
         ProductScreen productScreen = loginScreen.clickLoginButton();
         Assert.assertTrue(productScreen.isProductsTitleVisible(), "The products were not displayed, login failed.");
     }
-
     @Then("the system should display the error message {string}")
     public void the_system_should_display_the_error_message(String expectedErrorMessage) {
         String actualErrorMessage = loginScreen.getErrorMessage();
         Assert.assertEquals(expectedErrorMessage, actualErrorMessage);
 
     }
-
+    @Given("the user is successfully logged in and on the Products page")
+    public void the_user_is_successfully_logged_in_and_on_the_products_page() {
+        loginScreen.enterUsername("standard_user");
+        loginScreen.enterPassword("secret_sauce");
+        LoginSteps.productScreen = loginScreen.clickLoginButton();
+        Assert.assertTrue(
+                LoginSteps.productScreen.isProductsTitleVisible(),
+                "Login failed: Not navigated to the Products page."
+        );
+    }
 }

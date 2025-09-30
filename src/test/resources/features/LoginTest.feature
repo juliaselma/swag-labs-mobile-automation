@@ -2,7 +2,7 @@ Feature: Mobile Application Login
   As a user of the Swag Labs application
   I want to log in and access the product catalog
 
-  @smoke @login
+  @smoke @login @navigation
   Scenario Outline: 1. Successful LOGIN with valid credentials
     Given the application is running on a mobile device
     When I enter "<username>" in the username field

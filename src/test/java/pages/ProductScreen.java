@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.time.Duration;
 
 public class ProductScreen extends BaseScreen{
@@ -35,7 +34,7 @@ public class ProductScreen extends BaseScreen{
     }
     public int getCartBadgeCount() {
 
-        if (isElementVisible(cartBadgeTextLocator, 1)) { // Use a very short wait to check for existence
+        if (isElementVisible(cartBadgeTextLocator, 1)) {
             try {
                 WebElement badge = waitForElementVisibility(cartBadgeTextLocator, 1);
                 String countText = badge.getText();
@@ -72,7 +71,6 @@ public class ProductScreen extends BaseScreen{
         By locator = getProductButtonTextLocator(productName, expectedText);
         return isElementVisible(locator, 5);
     }
-
     public CartScreen clickCartIcon() {
         waitForElementClickable(cartNavigationButton, 10).click();
         return new CartScreen(driver);
