@@ -5,7 +5,6 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.testng.Assert;
 
-
 public class CartSteps {
     private final TestContext context;
     public CartSteps(TestContext context) { this.context = context; }
@@ -15,7 +14,6 @@ public class CartSteps {
         Assert.assertTrue(context.cartScreen.isCartTitleDisplayed(), "Pre-condition failed: Not on Cart Page.");
         Assert.assertTrue(context.cartScreen.isProductListed(productName), "Pre-condition failed: Item not in cart.");
     }
-
     @Then("the product {string} should be listed in the cart")
     public void the_product_should_be_listed_in_the_cart(String productName) {
         Assert.assertTrue(

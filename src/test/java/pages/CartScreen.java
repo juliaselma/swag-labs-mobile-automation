@@ -6,12 +6,13 @@ import org.openqa.selenium.WebElement;
 import io.appium.java_client.AppiumBy;
 
 public class CartScreen extends BaseScreen {
-    private final By cartTitleLocator = AppiumBy.xpath("//android.widget.TextView[@text='YOUR CART']");
-    private final By checkoutButtonLocator = AppiumBy.accessibilityId("test-CHECKOUT");
-    private final By cartScrollContainerLocator = AppiumBy.accessibilityId("test-Cart Content");
     public CartScreen(AppiumDriver driver) {
         super(driver);
     }
+    private final By cartTitleLocator = AppiumBy.xpath("//android.widget.TextView[@text='YOUR CART']");
+    private final By checkoutButtonLocator = AppiumBy.accessibilityId("test-CHECKOUT");
+    private final By cartScrollContainerLocator = AppiumBy.accessibilityId("test-Cart Content");
+
     private By getCartItemLocator(String productName) {
         return AppiumBy.xpath(String.format(
                 "//android.widget.ScrollView[@content-desc='test-Cart Content']" +

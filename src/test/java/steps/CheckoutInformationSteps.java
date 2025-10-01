@@ -8,7 +8,6 @@ import org.testng.Assert;
 public class CheckoutInformationSteps {
     private final TestContext context;
     public CheckoutInformationSteps (TestContext context) { this.context = context; }
-
     @Given("the user is on the \"Checkout: Information\" screen")
     public void userIsOnTheScreen() {
         context.loginScreen.enterUsername("standard_user");
@@ -19,7 +18,6 @@ public class CheckoutInformationSteps {
         context.checkoutInformationScreen =context.cartScreen.clickCheckoutButton();
         Assert.assertTrue(context.checkoutInformationScreen.isCheckoutTitleDisplayed());
     }
-
     @When("the user enters the First Name {string}")
     public void userEntersFirstName(String firstName) {
         context.checkoutInformationScreen.enterUsername(firstName);
@@ -39,9 +37,8 @@ public class CheckoutInformationSteps {
     public void userTapsButton(String buttonName) {
         context.checkoutInformationScreen.tapButton(buttonName);
     }
-
-    @Then("the user should be redirected to the {string} screen")
-    public void userShouldBeRedirectedToNextScreen(String nextScreen) {
+    @Then("the user should be redirected to the next screen")
+    public void userShouldBeRedirectedToNextScreen() {
         context.checkoutOverviewScreen = context.checkoutInformationScreen.tapContinue();
         Assert.assertTrue(context.checkoutOverviewScreen.isScreenDisplayed());
     }

@@ -30,12 +30,10 @@ public class CheckoutOverviewSteps {
     public void the_user_is_on_the_screen() {
         Assert.assertTrue(context.checkoutOverviewScreen.isScreenDisplayed());
     }
-
     @When("the user taps the FINISH button to resume purchase")
     public void the_user_taps_the_FINISH_button_to_resume_purchase() {
         context.checkoutOverviewScreen.tapFinishButton();
     }
-
     @Then("the user should be redirected to the Checkout: Complete screen")
     public void the_user_should_be_redirected_to_the_checkout_complete_screen() {
         context.confirmationScreen = context.checkoutOverviewScreen.tapFinishButton();

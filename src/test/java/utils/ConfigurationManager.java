@@ -16,13 +16,10 @@ public class ConfigurationManager {
             throw new RuntimeException("Could not load configuration file.");
         }
     }
-
     public static String getProperty(String key) {
         return properties.getProperty(key);
     }
-
     public static int getIntProperty(String key) {
         return Integer.parseInt(properties.getProperty(key));
     }
-
 }

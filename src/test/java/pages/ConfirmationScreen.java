@@ -13,5 +13,4 @@ public class ConfirmationScreen extends BaseScreen{
         return isElementVisible(pageTitleLocator, 10);
     }
 
-
 }

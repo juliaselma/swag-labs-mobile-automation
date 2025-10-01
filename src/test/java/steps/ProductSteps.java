@@ -49,7 +49,6 @@ public class ProductSteps{
     }
     @Then("the user should be navigated to the Cart page")
     public void the_user_should_be_navigated_to_the_cart_page() {
-        Assert.assertNotNull(context.cartScreen, "CartScreen object is NULL. Navigation failed.");
         Assert.assertTrue(
                 context.cartScreen.isCartTitleDisplayed(),
                 "Navigation failed: 'YOUR CART' title is not visible."

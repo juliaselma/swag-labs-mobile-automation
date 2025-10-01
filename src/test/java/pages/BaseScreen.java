@@ -13,7 +13,7 @@ import org.testng.Assert;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
+
 
 public class BaseScreen {
    protected AppiumDriver driver;
@@ -61,7 +61,7 @@ public class BaseScreen {
                         ExpectedConditions.elementToBeClickable(locator)
                 );
                 targetElement.click();
-                return; // Success
+                return;
             } catch (Exception e) {
                 if (i < maxScrolls - 1) {
                     driver.executeScript("mobile: scrollGesture", scrollArgs);

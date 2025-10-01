@@ -25,6 +25,13 @@ public class ProductScreen extends BaseScreen{
     }
     private final By cartNavigationButton = AppiumBy.accessibilityId("test-Cart");
     private final By cartBadgeTextLocator = AppiumBy.xpath("//*[@content-desc='test-Cart']//android.widget.TextView");
+    private By getProductTitleLocator(String productName) {
+        return AppiumBy.xpath(String.format(
+                "//*[@content-desc='%s' or @text='%s']",
+                productName,
+                productName
+        ));
+    }
     public void clickAddToCartButton(String productName) {
         By locator = getProductButtonTextLocator(productName, "ADD TO CART");
         waitForElementClickable(locator, 10).click();
@@ -51,13 +58,6 @@ public class ProductScreen extends BaseScreen{
     public boolean isProductsTitleVisible() {
         waitForElementVisibility(productsTitle, 5);
         return driver.findElement(productsTitle).isDisplayed();
-    }
-    private By getProductTitleLocator(String productName) {
-        return AppiumBy.xpath(String.format(
-                "//*[@content-desc='%s' or @text='%s']",
-                productName,
-                productName
-        ));
     }
     public boolean isProductListed(String productName) {
         By locator = getProductTitleLocator(productName);
