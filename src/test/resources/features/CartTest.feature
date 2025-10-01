@@ -20,15 +20,23 @@ Feature: Mobile Application Cart Interaction and Verification
       | Sauce Labs Backpack   | 1           | $29.99        |
 
   @cart @removal
-  Scenario: Remove an item from the Cart
-    Given the user clicks the ADD TO CART button for "Sauce Labs Backpack"
+  Scenario Outline: Remove an item from the Cart
+    Given the user clicks the ADD TO CART button for "<Product Name>"
     And the user clicks the Shopping Cart icon
-    When the user clicks the "REMOVE" button for "Sauce Labs Backpack"
-    Then the product "Sauce Labs Backpack" should NOT be listed in the cart
+    When the user clicks the "REMOVE" button for "<Product Name>"
+    Then the product "<Product Name>" should NOT be listed in the cart
+
+    Examples:
+      | Product Name |
+      | Sauce Labs Backpack |
 
   @cart @navigation
-  Scenario: Navigate to the Checkout Information page
-    Given the user clicks the ADD TO CART button for "Sauce Labs Backpack"
+  Scenario Outline: Navigate to the Checkout Information page
+    Given the user clicks the ADD TO CART button for "<Product Name>"
     And the user clicks the Shopping Cart icon
     When the user clicks the "CHECKOUT" button
     Then the user should be navigated to the "Checkout: Your Information" page
+
+    Examples:
+      | Product Name |
+      | Sauce Labs Backpack |
