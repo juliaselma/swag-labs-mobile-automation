@@ -10,6 +10,7 @@ public class TestContext {
     public CartScreen cartScreen;
     public CheckoutInformationScreen checkoutInformationScreen;
     public CheckoutOverviewScreen checkoutOverviewScreen;
+    public ConfirmationScreen confirmationScreen;
 
     public TestContext() {
     }

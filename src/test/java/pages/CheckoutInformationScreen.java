@@ -39,16 +39,18 @@ public class CheckoutInformationScreen extends BaseScreen{
         WebElement element = driver.findElement(postalCodeField);
         element.sendKeys(zipCode);
     }
-    public void tapButton (String buttonName){
-        if (buttonName.equals("CONTINUE")) {tapContinue();}
-        else if (buttonName.equals("CANCEL")) {tapCancel();}
-    }
+    /*public void tapButton (String buttonName){
+        if (getButtonLocator(buttonName).equals("CONTINUE")) {tapContinue();}
+        else if (getButtonLocator(buttonName).equals("CANCEL")) {tapCancel();}
+    }*/
     public CheckoutOverviewScreen tapContinue(){
-        driver.findElement(continueButton).click();
+        //driver.findElement(continueButton).click();
+        tapButton("CONTINUE");
         return new CheckoutOverviewScreen (driver);
     };
     public ProductScreen tapCancel(){
-        driver.findElement(cancelButton).click();
+        tapButton("CANCEL");
+        //driver.findElement(cancelButton).click();
         return new ProductScreen (driver);
     };
 

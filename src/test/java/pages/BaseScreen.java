@@ -1,5 +1,6 @@
 package pages;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -12,6 +13,7 @@ import org.testng.Assert;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 public class BaseScreen {
    protected AppiumDriver driver;
@@ -68,4 +70,32 @@ public class BaseScreen {
         }
     Assert.fail("Could not find and click CHECKOUT button after " + maxScrolls + " scrolls: " + locator.toString());
     }
+    public By getButtonLocator(String buttonName) {
+        String fullId = "test-" + buttonName.toUpperCase();
+        return AppiumBy.accessibilityId(fullId);
+    }
+
+    public void tapButton(String buttonName) {
+        By buttonLocator = getButtonLocator(buttonName);
+
+        final int MAX_SCROLLS = 3;
+
+        for (int i = 0; i < MAX_SCROLLS; i++) {
+            try {
+                // 2. Find and click the element using the generic locator
+                driver.findElement(buttonLocator).click();
+                System.out.println("Tapped button: " + buttonName);
+                return;
+            } catch (NoSuchElementException e) {
+                if (i == MAX_SCROLLS - 1) {
+                    // If max scrolls reached, throw the error
+                    throw new NoSuchElementException("Failed to find and tap " + buttonName + " button after max scrolls.");
+                }
+                // 3. Scroll and try again
+                //scrollHelper.scrollDownSmall();
+                scrollIntoViewAndClick(buttonLocator,buttonLocator,MAX_SCROLLS);
+            }
+        }
+    }
+
 }
