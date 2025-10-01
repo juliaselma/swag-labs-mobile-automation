@@ -19,28 +19,24 @@ public class CheckoutInformationSteps {
         Assert.assertTrue(context.checkoutInformationScreen.isCheckoutTitleDisplayed());
     }
     @When("the user enters the First Name {string}")
-    public void userEntersFirstName(String firstName) {
+    public void user_enters_first_name(String firstName) {
         context.checkoutInformationScreen.enterUsername(firstName);
     }
-
     @When("the user enters the Last Name {string}")
-    public void userEntersLastName(String lastName) {
+    public void user_enters_last_name(String lastName) {
         context.checkoutInformationScreen.enterLastName(lastName);
     }
-
     @And("the user enters the Zip/Postal Code {string}")
-    public void userEntersZipPostalCode(String zipCode) {
+    public void user_enters_zip_postal_code(String zipCode) {
         context.checkoutInformationScreen.enterPostalCode(zipCode);
     }
-
     @When("the user taps the {string} button")
-    public void userTapsButton(String buttonName) {
+    public void user_taps_button(String buttonName) {
         context.checkoutInformationScreen.tapButton(buttonName);
     }
     @Then("the user should be redirected to the next screen")
-    public void userShouldBeRedirectedToNextScreen() {
+    public void user_should_se_redirected_to_next_screen() {
         context.checkoutOverviewScreen = context.checkoutInformationScreen.tapContinue();
         Assert.assertTrue(context.checkoutOverviewScreen.isScreenDisplayed());
     }
-
 }
