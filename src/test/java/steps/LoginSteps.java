@@ -28,8 +28,8 @@ public class LoginSteps {
 
     @Then("I should be navigated to the Products screen")
     public void i_should_be_navigated_to_the_products_screen() {
-        ProductScreen productScreen = context.loginScreen.clickLoginButton();
-        Assert.assertTrue(productScreen.isProductsTitleVisible(), "The products were not displayed, login failed.");
+       // ProductScreen productScreen = context.loginScreen.clickLoginButton();
+        Assert.assertTrue(context.productScreen.isProductsTitleVisible(), "The products were not displayed.");
     }
     @Then("the system should display the error message {string}")
     public void the_system_should_display_the_error_message(String expectedErrorMessage) {

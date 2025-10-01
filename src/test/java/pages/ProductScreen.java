@@ -49,6 +49,7 @@ public class ProductScreen extends BaseScreen{
         return 0;
     }
     public boolean isProductsTitleVisible() {
+        waitForElementVisibility(productsTitle, 5);
         return driver.findElement(productsTitle).isDisplayed();
     }
     private By getProductTitleLocator(String productName) {
