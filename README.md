@@ -67,3 +67,21 @@ The framework uses a **highly reliable dynamic XPath locator pattern** to handle
     ```
 
 ***
+🚀 Execution Instructions
+
+This project is a test automation suite designed to be run through its designated Test Runner class.
+
+**Run via IDE**
+
+
+Run the tests is by executing the Test Runner class directly from your Integrated Development Environment (IDE).
+
+**Locate the Test Runner:**
+
+Navigate to the file: src/test/java/runner/TestRunner.java
+
+**Execute the Tests:**
+
+In IntelliJ IDEA:
+
+Right-click on the TestRunner.java file in the project explorer or open the file and click the green "Run" arrow next to the class declaration.
