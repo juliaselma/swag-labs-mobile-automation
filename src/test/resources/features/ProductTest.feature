@@ -21,8 +21,8 @@ Feature: Product Catalog Management
     And the button for "<productName>" should display "<expectedButtonText>"
     Examples:
       | productName         | count | expectedButtonText|
-      | Sauce Labs Backpack | 1     |REMOVE             |
       |Sauce Labs Bike Light|1      |REMOVE             |
+      | Sauce Labs Backpack | 1     |REMOVE             |
 
   @products
  Scenario Outline: Remove an item from the cart

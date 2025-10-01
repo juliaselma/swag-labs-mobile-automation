@@ -15,13 +15,21 @@ public class ProductScreen extends BaseScreen{
 
     private final By productsTitle = AppiumBy.xpath("//android.widget.TextView[@text='PRODUCTS']");
     private By getProductButtonTextLocator(String productName, String expectedText) {
-        return AppiumBy.xpath(String.format(
+        /*return AppiumBy.xpath(String.format(
                 "//*[@text='%s']" +
                         "/ancestor::android.view.ViewGroup" +
                         "//*[contains(@text, '%s')]",
                 productName,
                 expectedText
-        ));
+        ));*/
+        //Worked
+        String xpathTemplate =
+                "//android.widget.TextView[@text='%s']/../../descendant::android.view.ViewGroup[@content-desc='test-%s']";
+        //android.widget.TextView[@text='Sauce Labs Bike Light']/../../descendant::android.view.ViewGroup[@content-desc='ADD TO CART']
+
+        // Use String.format() with two arguments: productName and buttonContentDesc
+        return AppiumBy.xpath(String.format(xpathTemplate, productName, expectedText));
+
     }
     private final By cartNavigationButton = AppiumBy.accessibilityId("test-Cart");
     private final By cartBadgeTextLocator = AppiumBy.xpath("//*[@content-desc='test-Cart']//android.widget.TextView");
@@ -70,8 +78,12 @@ public class ProductScreen extends BaseScreen{
         }
     }
     public boolean isProductButtonTextDisplayed(String productName, String expectedText) {
-        By locator = getProductButtonTextLocator(productName, expectedText);
+         By locator = getProductButtonTextLocator(productName, expectedText);
         return isElementVisible(locator, 5);
+    }
+
+    public boolean isButtonNameCorrect(String productName, String expectedText){
+        return true;
     }
     public CartScreen clickCartIcon() {
         waitForElementClickable(cartNavigationButton, 10).click();

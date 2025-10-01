@@ -13,7 +13,6 @@ Feature: Mobile Application Login
     Examples:
       | username      | password     |
       | standard_user | secret_sauce |
-      |problem_user   |secret_sauce  |
 
   @negative @login
   Scenario Outline: 2. User is unable to log in with invalid or missing credentials

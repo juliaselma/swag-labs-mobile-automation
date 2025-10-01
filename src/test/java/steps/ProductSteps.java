@@ -33,11 +33,12 @@ public class ProductSteps{
         );
     }
     @Then("the button for {string} should display {string}")
-    public void the_button_for_should_display(String expectedText, String productName) {
+    public void the_button_for_should_display(String productName, String expectedText) {
         Assert.assertTrue(
                 context.productScreen.isProductButtonTextDisplayed(productName, expectedText),
                 String.format("Button for '%s' did not display '%s' as expected.", productName, expectedText)
         );
+
     }
     @When("the user clicks the REMOVE button for {string}")
     public void the_user_clicks_the_REMOVE_button_for( String productName) {
